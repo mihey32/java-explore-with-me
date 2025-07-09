@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-
 @Service
 public class Statistic {
 
