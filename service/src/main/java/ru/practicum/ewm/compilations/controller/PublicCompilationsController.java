@@ -1,8 +1,10 @@
 package ru.practicum.ewm.compilations.controller;
 
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilations.dto.CompilationDto;
 import ru.practicum.ewm.compilations.service.PublicCompilationsService;
@@ -12,6 +14,7 @@ import java.util.Collection;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/compilations")
 public class PublicCompilationsController {
 
@@ -28,7 +31,7 @@ public class PublicCompilationsController {
 
     @GetMapping("/{comp-id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto getCompilation(@PathVariable("comp-id") Long compId) {
+    public CompilationDto getCompilation(@PathVariable("comp-id") @Positive Long compId) {
         log.info("Получен запрос GET /compilations/{}", compId);
         return service.get(compId);
     }

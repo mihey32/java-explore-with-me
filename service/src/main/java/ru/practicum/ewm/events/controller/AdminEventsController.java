@@ -6,6 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.enums.States;
 import ru.practicum.ewm.events.dto.EventFullDto;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/admin/events")
 public class AdminEventsController {
     private final AdminEventService service;
@@ -49,7 +51,7 @@ public class AdminEventsController {
 
     @PatchMapping("/{event-id}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto update(@PathVariable("event-id") Long eventId,
+    public EventFullDto update(@PathVariable("event-id") @Positive Long eventId,
                                @RequestBody @Valid UpdateEventAdminRequest request) {
         log.info("Получен запрос PATCH /admin/events/{}", eventId);
         return service.update(request, eventId);

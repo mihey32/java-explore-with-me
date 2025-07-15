@@ -1,5 +1,6 @@
 package ru.practicum.ewm.users;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.users.dto.NewUserRequest;
 import ru.practicum.ewm.users.dto.UserDto;
 import ru.practicum.ewm.users.dto.UserShortDto;
@@ -7,6 +8,7 @@ import ru.practicum.ewm.users.dto.UserShortDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class UserMapper {
     public static User mapToEntity(NewUserRequest request) {
         User user = new User();

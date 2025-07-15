@@ -1,5 +1,6 @@
 package ru.practicum.ewm.events;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.categories.Category;
 import ru.practicum.ewm.categories.CategoryMapper;
 import ru.practicum.ewm.enums.AdminStateAction;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class EventMapper {
     public static Event mapToEntity(NewEventDto dto, Category category, User initiator) {
         Event event = new Event();

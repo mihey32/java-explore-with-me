@@ -1,9 +1,11 @@
 package ru.practicum.ewm.compilations.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilations.dto.CompilationDto;
 import ru.practicum.ewm.compilations.dto.NewCompilationDto;
@@ -13,6 +15,7 @@ import ru.practicum.ewm.compilations.service.AdminCompilationService;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/admin/compilations")
 public class AdminCompilationsController {
 
@@ -27,7 +30,7 @@ public class AdminCompilationsController {
 
     @PatchMapping("/{comp-id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto update(@PathVariable("comp-id") Long eventId,
+    public CompilationDto update(@PathVariable("comp-id") @Positive Long eventId,
                                  @RequestBody @Valid UpdateCompilationRequest request) {
         log.info("Получен запрос PATCH /admin/compilations/{} на изменение подборки", eventId);
         return service.update(request, eventId);
@@ -35,7 +38,7 @@ public class AdminCompilationsController {
 
     @DeleteMapping("/{comp-id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("comp-id") Long compId) {
+    public void delete(@PathVariable("comp-id") @Positive Long compId) {
         log.info("Получен запрос DELETE /admin/compilations/{}", compId);
         service.delete(compId);
     }

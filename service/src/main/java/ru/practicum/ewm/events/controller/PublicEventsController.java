@@ -1,9 +1,11 @@
 package ru.practicum.ewm.events.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.dto.EventFullDto;
 import ru.practicum.ewm.events.dto.EventRequestParam;
@@ -17,6 +19,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/events")
 public class PublicEventsController {
     private final PublicEventsService service;
@@ -42,7 +45,7 @@ public class PublicEventsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto get(@PathVariable("id") Long id, HttpServletRequest request) {
+    public EventFullDto get(@PathVariable("id") @Positive Long id, HttpServletRequest request) {
         log.info("Получен запрос GET /events/{}", id);
         return service.get(id, request);
     }

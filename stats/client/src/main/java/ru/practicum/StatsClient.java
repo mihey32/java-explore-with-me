@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StatsClient extends BaseClient {
-    ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+    private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Autowired
     public StatsClient(@Value("${stats.url}") String serverUrl, RestTemplateBuilder builder) {

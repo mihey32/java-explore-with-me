@@ -1,5 +1,6 @@
 package ru.practicum.ewm.requests;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.enums.Statuses;
 import ru.practicum.ewm.events.Event;
 import ru.practicum.ewm.requests.dto.ParticipationRequestDto;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class RequestMapper {
     public static Request mapToEntity(Event event, User requester) {
         Request request = new Request();

@@ -1,11 +1,13 @@
 package ru.practicum.ewm.categories;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.categories.dto.CategoryDto;
 import ru.practicum.ewm.categories.dto.NewCategoryDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class CategoryMapper {
     public static Category mapToEntity(NewCategoryDto request) {
         Category category = new Category();

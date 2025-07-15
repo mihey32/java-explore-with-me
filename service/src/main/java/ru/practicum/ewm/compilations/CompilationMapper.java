@@ -1,5 +1,6 @@
 package ru.practicum.ewm.compilations;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.compilations.dto.CompilationDto;
 import ru.practicum.ewm.compilations.dto.NewCompilationDto;
 import ru.practicum.ewm.compilations.dto.UpdateCompilationRequest;
@@ -9,6 +10,7 @@ import ru.practicum.ewm.events.EventMapper;
 import java.util.List;
 import java.util.Set;
 
+@UtilityClass
 public class CompilationMapper {
     public static Compilation mapToEntity(NewCompilationDto request, Set<Event> events) {
         Compilation compilation = new Compilation();

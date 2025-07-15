@@ -1,10 +1,12 @@
 package ru.practicum.ewm.categories.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.categories.dto.CategoryDto;
 import ru.practicum.ewm.categories.dto.NewCategoryDto;
@@ -14,6 +16,7 @@ import ru.practicum.ewm.exceptions.DuplicatedDataException;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 @RequestMapping("/admin/categories")
 public class AdminCategoriesController {
     private final CategoryServiceAdminImpl service;
@@ -27,7 +30,7 @@ public class AdminCategoriesController {
 
     @PatchMapping("/{cat-id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto update(@PathVariable("cat-id") Long categoryId,
+    public CategoryDto update(@PathVariable("cat-id") @Positive Long categoryId,
                               @RequestBody @Valid NewCategoryDto request) {
         log.info("Получен запрос PATCH /admin/categories/{}", categoryId);
 
@@ -43,7 +46,7 @@ public class AdminCategoriesController {
 
     @DeleteMapping("/{cat-id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("cat-id") Long categoryId) {
+    public void delete(@PathVariable("cat-id") @Positive  Long categoryId) {
         log.info("Получен запрос DELETE /admin/categories/{}", categoryId);
         service.delete(categoryId);
     }
