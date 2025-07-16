@@ -7,9 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.events.dto.EventFullDto;
 import ru.practicum.ewm.events.dto.EventRequestParam;
-import ru.practicum.ewm.events.dto.EventShortDto;
+import ru.practicum.ewm.events.dto.EventWithCommentsDto;
 import ru.practicum.ewm.events.service.PublicEventsService;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class PublicEventsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<EventShortDto> getAll(@RequestParam(name = "text", required = false) String text,
+    public Collection<EventWithCommentsDto> getAll(@RequestParam(name = "text", required = false) String text,
                                             @RequestParam(name = "categories", required = false) List<Long> categories,
                                             @RequestParam(name = "paid", required = false) Boolean paid,
                                             @RequestParam(name = "rangeStart", required = false) LocalDateTime rangeStart,
@@ -45,7 +44,7 @@ public class PublicEventsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto get(@PathVariable("id") @Positive Long id, HttpServletRequest request) {
+    public EventWithCommentsDto get(@PathVariable("id") @Positive Long id, HttpServletRequest request) {
         log.info("Получен запрос GET /events/{}", id);
         return service.get(id, request);
     }
