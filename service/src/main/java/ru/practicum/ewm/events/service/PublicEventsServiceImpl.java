@@ -30,9 +30,9 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class PublicEventsServiceImpl implements PublicEventsService {
 
-    private static EventRepository eventRepository;
-    private static CommentRepository commentRepository;
-    private static Statistic statistic;
+    private final EventRepository eventRepository;
+    private final CommentRepository commentRepository;
+    private final Statistic statistic;
 
     @Autowired
     public PublicEventsServiceImpl(EventRepository eventRepository, CommentRepository commentRepository, Statistic statistic) {
