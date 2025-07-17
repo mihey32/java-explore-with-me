@@ -3,6 +3,8 @@ package ru.practicum.ewm.events;
 import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.categories.Category;
 import ru.practicum.ewm.categories.CategoryMapper;
+import ru.practicum.ewm.comments.Comment;
+import ru.practicum.ewm.comments.CommentMapper;
 import ru.practicum.ewm.enums.AdminStateAction;
 import ru.practicum.ewm.enums.States;
 import ru.practicum.ewm.enums.UserStateAction;
@@ -13,6 +15,7 @@ import ru.practicum.ewm.users.User;
 import ru.practicum.ewm.users.UserMapper;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -182,6 +185,32 @@ public class EventMapper {
         return dto;
     }
 
+    public static EventWithCommentsDto mapToWithCommentsDto(Event entity, Long views, List<Comment> comments) {
+        EventWithCommentsDto dto = new EventWithCommentsDto();
+        dto.setId(entity.getId());
+        dto.setAnnotation(entity.getAnnotation());
+        dto.setCategory(CategoryMapper.mapToDto(entity.getCategory()));
+        dto.setConfirmedRequests(entity.getConfirmedRequests());
+        dto.setCreatedOn(entity.getCreatedOn());
+        dto.setDescription(entity.getDescription());
+        dto.setEventDate(entity.getEventDate());
+        dto.setInitiator(UserMapper.mapToShortDto(entity.getInitiator()));
+        dto.setLocation(new LocationDto(entity.getLocation().getLat(), entity.getLocation().getLon()));
+        dto.setPaid(entity.getPaid());
+        dto.setParticipantLimit(entity.getParticipantLimit());
+        dto.setPublishedOn(entity.getPublishedOn());
+        dto.setRequestModeration(entity.getRequestModeration());
+        dto.setState(entity.getState());
+        dto.setTitle(entity.getTitle());
+        dto.setViews(entity.getViews());
+        dto.setViews(views);
+        if (comments != null) {
+            dto.setComments(CommentMapper.mapToListShortDto(comments));
+        }
+
+        return dto;
+    }
+
     public static EventShortDto mapToShortDto(Event entity) {
         EventShortDto dto = new EventShortDto();
         dto.setId(entity.getId());
@@ -213,6 +242,18 @@ public class EventMapper {
     }
 
     public static Set<EventShortDto> mapToListShortDto(Set<Event> setEntity, Map<Long, Long> statsMap) {
-        return setEntity.stream().map(elem -> mapToShortDtoWithStat(elem, statsMap.get(elem.getId()))).collect(Collectors.toSet());
+        return setEntity.stream()
+                .map(elem -> mapToShortDtoWithStat(elem, statsMap.get(elem.getId())))
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<EventWithCommentsDto> mapToListWithCommentsDto(Set<Event> setEntity,
+                                                             Map<Long, Long> statsMap,
+                                                             Map<Event, List<Comment>> commentsMap) {
+        return setEntity.stream()
+                .map(elem -> mapToWithCommentsDto(elem,
+                        statsMap.get(elem.getId()),
+                        commentsMap.getOrDefault(elem, Collections.emptyList())))
+                .collect(Collectors.toSet());
     }
 }
